@@ -23,40 +23,42 @@ namespace UI
             Console.WriteLine();
             Console.ResetColor();
         }
-        public async Task Main()
+        public void Main()
         {
             int games;
             do
             {
                 DeleteOneLine();
                 Console.Write("Hoeveel spelletjes wenst u te spelen?: ");
-            } while (!int.TryParse(Console.ReadLine(), out games));
+            } while (!int.TryParse(Console.ReadLine(), out games) && games < 20 && games > 0);
             int trees;
             do
             {
                 DeleteOneLine();
                 Console.Write("Hoeveel bomen in het bos?: ");
-            } while (!int.TryParse(Console.ReadLine(), out trees));
+            } while (!int.TryParse(Console.ReadLine(), out trees) && trees < 150 && trees > 10);
             int monkeys;
             do
             {
                 DeleteOneLine();
                 Console.Write("Hoeveel apen in het bos?: ");
-            } while (!int.TryParse(Console.ReadLine(), out monkeys) && monkeys < 23);
+            } while (!int.TryParse(Console.ReadLine(), out monkeys) && monkeys < 23 && monkeys > 0);
             DeleteOneLine();
-            await Task.Run(() => Footer(games, trees, monkeys));
+            Footer(games, trees, monkeys);
         }
 
-        private async Task Footer(int games, int trees, int monkeys)
+        private void Footer(int games, int trees, int monkeys)
         {
             Console.WriteLine($"We starten nu {games} spelletjes met {trees} bomen en {monkeys} apen.");
             Console.WriteLine("Van zodra alle spelletjes afeglopen zijn zal hieronder melding gegeven worden.");
             Console.WriteLine();
             Game game = new Game();
-            game.PlayGames(games, trees, monkeys);
-            Console.WriteLine("Alle spelletjes zijn klaar, de rapporten vind je in de Documenten map.");
-            Console.WriteLine("Program ended, press any key to exit...");
-            Console.ReadLine();
+            if (game.PlayGames(games, trees, monkeys).Result)
+            {
+                Console.WriteLine("Alle spelletjes zijn klaar, de rapporten vind je in de Documenten map.");
+                Console.WriteLine("Program ended, press any key to exit...");
+                Console.ReadLine();
+            }
         }
     }
 }

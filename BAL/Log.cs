@@ -6,22 +6,26 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace BAL
 {
     public class Log
     {
-        private string PathToDocs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EscapeFromTheForests";
+        public string PathToDocs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\EscapeFromTheForests";
+        public List<Task> TaskList = new List<Task>();
         private int _scaling = 2;
         private int _thickness = 20;
-        private DBController DB { get; set; }
         public Log()
         {
             DirectoryInfo dir = new DirectoryInfo(PathToDocs);
             if (!dir.Exists)
                 dir.Create();
 
-            DB = new DBController();
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                file.Delete();
+            }
         }
         public void CreateBitmap(Forest f)
         {
@@ -54,13 +58,13 @@ namespace BAL
 
         public void WriteImage(int key, Image i)
         {
-            i.Save(Path.Combine(PathToDocs, $"WoodMap_{key}.jpg"), ImageFormat.Jpeg);
+            i.Save(Path.Combine(PathToDocs, $"WoodMap_{key}.jpg"), ImageFormat.Jpeg); //Sometimes this doesnt work, why?!
         }
 
         public void ActionLog(int woodID, int monkeyID, string message)
         {
             Console.WriteLine($"Writing Log: {message}");
-            DB.AddActionLog(
+            Global.DB.AddActionLog(
                 new ActionLog
                 {
                     WoodId = woodID,
@@ -72,7 +76,7 @@ namespace BAL
         public void MonkeyLog(Forest w, Monkey m, Tree t)
         {
             Console.WriteLine($"Writing MonkeyLog: {m.Id}, {m.Naam}");
-            DB.AddMonkeyLog(
+            Global.DB.AddMonkeyLog(
                 new MonkeyLog
                 {
                     MonkeyId = m.Id,
@@ -88,7 +92,7 @@ namespace BAL
         public void TreeLog(Forest w, Tree t)
         {
             Console.WriteLine($"Writing TreeLog: Forest_{w.Id} Tree_{t.Id}");
-            DB.AddTreeLog(
+            Global.DB.AddTreeLog(
                 new TreeLog
                 {
                     WoodId = w.Id,

@@ -64,7 +64,7 @@ namespace BAL.Model
 
                 if (!Trees.Contains(newTree))
                 {
-                    Task.Run(() => Global.Log.TreeLog(this, newTree));
+                    Global.Log.TaskList.Add(Task.Run(() => Global.Log.TreeLog(this, newTree)));
                     Console.WriteLine($"[{Id}]: Creating tree at {newTree.X},{newTree.Y} with ID: {newTree.Id}");
                     Trees.Add(newTree);
                 }

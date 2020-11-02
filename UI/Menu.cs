@@ -50,7 +50,7 @@ namespace UI
         private void Footer(int games, int trees, int monkeys)
         {
             Console.WriteLine($"We starten nu {games} spelletjes met {trees} bomen en {monkeys} apen.");
-            Console.WriteLine("Van zodra alle spelletjes afeglopen zijn zal hieronder melding gegeven worden.");
+            Console.WriteLine("Van zodra alle spelletjes afgelopen zijn zal hieronder melding gegeven worden.");
             Console.WriteLine();
             Game game = new Game();
             if (game.PlayGames(games, trees, monkeys).Result)

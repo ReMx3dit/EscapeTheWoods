@@ -1,4 +1,6 @@
 ﻿using DAL.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +39,9 @@ namespace DAL
             int lastId = 0;
             using (var context = new MonkeyDbContext())
             {
-                lastId = context.ActionLogs.ToList().Last().WoodId;
+                int logCount = context.ActionLogs.Count();
+                if (logCount > 0)
+                    lastId = context.ActionLogs.ToList().Last().WoodId;
             }
             return lastId;
         }
@@ -46,7 +50,9 @@ namespace DAL
             int lastId = 0;
             using (var context = new MonkeyDbContext())
             {
-                lastId = context.ActionLogs.Select(x => x.MonkeyId).ToList().Max();
+                int logCount = context.ActionLogs.Count();
+                if (logCount > 0)
+                    lastId = context.ActionLogs.Select(x => x.MonkeyId).ToList().Max();
             }
             return lastId;
         }

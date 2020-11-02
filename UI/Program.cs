@@ -7,12 +7,11 @@ namespace UI
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             Menu menu = new Menu();
             menu.Title();
-            await Task.Run(()=>menu.Main());
-            Console.ReadLine();
+            menu.Main();
         }
     }
 }

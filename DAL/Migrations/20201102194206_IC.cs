@@ -12,7 +12,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ForestId = table.Column<int>(nullable: false),
+                    WoodId = table.Column<int>(nullable: false),
                     MonkeyId = table.Column<int>(nullable: false),
                     Message = table.Column<string>(nullable: true)
                 },

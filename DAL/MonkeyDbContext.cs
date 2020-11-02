@@ -11,7 +11,7 @@ namespace DAL
         public DbSet<MonkeyLog> MonkeyLogs { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-R1\SQLEXPRESS;Initial Catalog=MonkeyDB;Integrated Security=True;Pooling=False");
+            optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-R1\SQLEXPRESS;Initial Catalog=MonkeyDB_tmp;Integrated Security=True;Pooling=False");
         }
     }
 }

@@ -30,7 +30,7 @@ namespace BAL.Model
 
                     // Logging
                     Console.WriteLine($"[{f.Id}]: Monkey {Naam} jumps out of the forest");
-                    Task.Run(()=>Global.Log.ActionLog(f.Id, this.Id, $"[{f.Id}]: Monkey {Naam} jumps out of the forest"));
+                    Global.Log.TaskList.Add(Task.Run(() => Global.Log.ActionLog(f.Id, this.Id, $"[{f.Id}]: Monkey {Naam} jumps out of the forest")));
                     f.TextLogs.Add($"[{f.Id}]: Monkey {Naam} jumps out of the forest");
                 }
                 else
@@ -41,13 +41,12 @@ namespace BAL.Model
 
                     // Logging
                     Console.WriteLine($"[{f.Id}]: Monkey {Naam} jumps from {prev.Id} to {closestTree.Id} at {closestTree.X},{closestTree.Y}");
-                    Task.Run(()=>Global.Log.ActionLog(f.Id, this.Id, $"[{f.Id}]: Monkey {Naam} jumps from {prev.Id} to {closestTree.Id} at {closestTree.X},{closestTree.Y}"));
-                    Task.Run(()=>Global.Log.MonkeyLog(f, this, closestTree));
+                    Global.Log.TaskList.Add(Task.Run(() => Global.Log.ActionLog(f.Id, this.Id, $"[{f.Id}]: Monkey {Naam} jumps from {prev.Id} to {closestTree.Id} at {closestTree.X},{closestTree.Y}")));
+                    Global.Log.TaskList.Add(Task.Run(() => Global.Log.MonkeyLog(f, this, closestTree)));
                     f.TextLogs.Add($"[{f.Id}]: Monkey {Naam} jumps from {prev.Id} to {closestTree.Id} at {closestTree.X},{closestTree.Y}");
                     Global.Log.WriteMonkeyJump(f, prev, closestTree);
                 }
             } while (CalculatedPath.Last().Value.Id != 9696);
-            //f.Monkeys[Id] = this;
             return true;
         }
     }
